@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tech News Resources</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        header h1 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        header p {
+            color: #666;
+        }
+        
+        .tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+        
+        .tab {
+            padding: 10px 20px;
+            margin: 0 5px;
+            background-color: #ddd;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        
+        .tab.active {
+            background-color: #007bff;
+            color: white;
+        }
+        
+        .tab-ai.active {
+            background-color: #3498db;
+        }
+        
+        .tab-quantum.active {
+            background-color: #9b59b6;
+        }
+        
+        .tab-cyber.active {
+            background-color: #e74c3c;
+        }
+        
+        .content {
+            display: none;
+        }
+        
+        .content.active {
+            display: block;
+        }
+        
+        .sticky-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .sticky-note {
+            background-color: #fff9c4;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.16);
+            transition: all 0.3s ease;
+            position: relative;
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .sticky-note:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.19);
+        }
+        
+        .ai-note {
+            background-color: #bbdefb;
+            border-left: 5px solid #3498db;
+        }
+        
+        .quantum-note {
+            background-color: #e1bee7;
+            border-left: 5px solid #9b59b6;
+        }
+        
+        .cyber-note {
+            background-color: #ffcdd2;
+            border-left: 5px solid #e74c3c;
+        }
+        
+        .sticky-note h3 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        
+        .sticky-note p {
+            font-size: 0.9rem;
+            color: #555;
+            margin-bottom: 15px;
+            flex-grow: 1;
+        }
+        
+        .sticky-note .site-links {
+            margin-top: auto;
+        }
+        
+        .sticky-note a {
+            display: inline-block;
+            color: #007bff;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 10px;
+            transition: color 0.2s ease;
+        }
+        
+        .sticky-note a:hover {
+            color: #0056b3;
+            text-decoration: underline;
+        }
+        
+        .tag {
+            display: inline-block;
+            padding: 3px 8px;
+            background-color: rgba(0,0,0,0.1);
+            border-radius: 3px;
+            font-size: 0.8rem;
+            margin-right: 5px;
+            margin-bottom: 5px;
+        }
+        
+        .tag-container {
+            margin-bottom: 10px;
+        }
+        
+        @media (max-width: 768px) {
+            .sticky-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .tabs {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .tab {
+                margin: 5px 0;
+                width: 80%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Top Tech News Resources</h1>
+        <p>Trusted sources for AI, Quantum Computing, and Cybersecurity news</p>
+    </header>
+    
+    <div class="tabs">
+        <button class="tab tab-ai active" onclick="showCategory('ai')">AI</button>
+        <button class="tab tab-quantum" onclick="showCategory('quantum')">Quantum Computing</button>
+        <button class="tab tab-cyber" onclick="showCategory('cyber')">Cybersecurity</button>
+    </div>
+    
+    <div id="ai-content" class="content active">
+        <div class="sticky-container" id="ai-container">
+            <!-- AI notes will be generated here -->
+        </div>
+    </div>
+    
+    <div id="quantum-content" class="content">
+        <div class="sticky-container" id="quantum-container">
+            <!-- Quantum notes will be generated here -->
+        </div>
+    </div>
+    
+    <div id="cyber-content" class="content">
+        <div class="sticky-container" id="cyber-container">
+            <!-- Cybersecurity notes will be generated here -->
+        </div>
+    </div>
+    
+    <script>
+        // Data for each category
+        const resources = {
+            ai: [
+                {
+                    title: "MIT Technology Review - AI",
+                    description: "Deep analysis of AI trends and research with a focus on societal impact. Published by MIT, it offers authoritative coverage of emerging technologies.",
+                    url: "https://www.technologyreview.com/topic/artificial-intelligence/",
+                    tags: ["Research", "Industry", "Ethics"]
+                },
+                {
+                    title: "Google AI Blog",
+                    description: "Updates directly from Google's AI teams on their latest research, projects and tools. Includes papers, case studies and technical advances.",
+                    url: "https://ai.googleblog.com/",
+                    tags: ["Research", "Industry", "Technical"]
+                },
+                {
+                    title: "DeepMind Blog",
+                    description: "Research breakthroughs from one of the world's leading AI research labs. Covers fundamental AI research and applications in science.",
+                    url: "https://deepmind.com/blog",
+                    tags: ["Research", "Science", "Technical"]
+                },
+                {
+                    title: "OpenAI Blog",
+                    description: "Latest research and announcements from OpenAI, covering large language models, safety, and AI policy considerations.",
+                    url: "https://openai.com/blog/",
+                    tags: ["Research", "Safety", "Policy"]
+                },
+                {
+                    title: "Distill",
+                    description: "Interactive, visual explanations of machine learning concepts and research papers. Academic-level content presented in an accessible way.",
+                    url: "https://distill.pub/",
+                    tags: ["Research", "Educational", "Visual"]
+                },
+                {
+                    title: "Towards Data Science",
+                    description: "Medium publication featuring articles on AI, machine learning and data science from practitioners and researchers.",
+                    url: "https://towardsdatascience.com/",
+                    tags: ["Tutorials", "Industry", "Practical"]
+                },
+                {
+                    title: "Papers with Code",
+                    description: "Free and open resource with machine learning papers, code, datasets, methods and evaluation tables. Shows SOTA progress.",
+                    url: "https://paperswithcode.com/",
+                    tags: ["Research", "Code", "Datasets"]
+                },
+                {
+                    title: "ArXiv - AI Papers",
+                    description: "The primary source for preprints of research papers in AI and machine learning. Get research before formal publication.",
+                    url: "https://arxiv.org/list/cs.AI/recent",
+                    tags: ["Research", "Academic", "Technical"]
+                },
+                {
+                    title: "AI Alignment Forum",
+                    description: "Focused on AI safety and alignment research. Technical discussions about ensuring AI systems act in accordance with human values.",
+                    url: "https://www.alignmentforum.org/",
+                    tags: ["Safety", "Alignment", "Research"]
+                },
+                {
+                    title: "Hugging Face Blog",
+                    description: "Updates from a leading AI community platform. Covers NLP, computer vision, and open-source machine learning tools.",
+                    url: "https://huggingface.co/blog",
+                    tags: ["Open Source", "NLP", "Tools"]
+                }
+            ],
+            quantum: [
+                {
+                    title: "Quanta Magazine",
+                    description: "Award-winning publication with in-depth, accessible coverage of quantum physics and computing. Known for clarity on complex topics.",
+                    url: "https://www.quantamagazine.org/tag/quantum-computing/",
+                    tags: ["Science", "Research", "Explainers"]
+                },
+                {
+                    title: "IBM Quantum",
+                    description: "Updates from IBM's quantum computing division. Includes research breakthroughs, technical resources, and access to quantum systems.",
+                    url: "https://www.ibm.com/quantum",
+                    tags: ["Industry", "Hardware", "Research"]
+                },
+                {
+                    title: "Quantum Computing Report",
+                    description: "Industry-focused site covering business and technical developments in quantum computing. Includes analysis of startups and major players.",
+                    url: "https://quantumcomputingreport.com/",
+                    tags: ["Industry", "Business", "News"]
+                },
+                {
+                    title: "Google Quantum AI",
+                    description: "Research updates from Google's quantum computing team. Focuses on hardware development and quantum algorithms.",
+                    url: "https://quantumai.google/",
+                    tags: ["Research", "Hardware", "Technical"]
+                },
+                {
+                    title: "Microsoft Quantum",
+                    description: "Microsoft's quantum computing resources, including their topological qubit approach and Q# programming language.",
+                    url: "https://www.microsoft.com/en-us/quantum",
+                    tags: ["Industry", "Software", "Development"]
+                },
+                {
+                    title: "Quantum Zeitgeist",
+                    description: "News and analysis focused on the quantum computing ecosystem. Covers startups, funding, and commercial applications.",
+                    url: "https://quantumzeitgeist.com/",
+                    tags: ["Startups", "Business", "Applications"]
+                },
+                {
+                    title: "Quantum Journal",
+                    description: "Open-access journal publishing quantum information science and technology research. Academic but accessible to technical readers.",
+                    url: "https://quantum-journal.org/papers/",
+                    tags: ["Academic", "Research", "Technical"]
+                },
+                {
+                    title: "Phys.org - Quantum Physics",
+                    description: "Latest research news in quantum physics from universities and research institutions worldwide.",
+                    url: "https://phys.org/physics-news/quantum-physics/",
+                    tags: ["Research", "News", "Academic"]
+                },
+                {
+                    title: "Nature - Quantum Information",
+                    description: "Quantum computing and quantum information articles from one of the world's most prestigious scientific journals.",
+                    url: "https://www.nature.com/subjects/quantum-information",
+                    tags: ["Academic", "Research", "Peer-reviewed"]
+                },
+                {
+                    title: "Q-CTRL Blog",
+                    description: "Blog from a quantum control engineering company, discussing practical challenges in quantum computing hardware.",
+                    url: "https://q-ctrl.com/blog/",
+                    tags: ["Industry", "Hardware", "Engineering"]
+                }
+            ],
+            cyber: [
+                {
+                    title: "Krebs on Security",
+                    description: "In-depth investigative reporting on cybercrime and security breaches by Brian Krebs, former Washington Post reporter.",
+                    url: "https://krebsonsecurity.com/",
+                    tags: ["Investigations", "Breaches", "Analysis"]
+                },
+                {
+                    title: "Schneier on Security",
+                    description: "Blog by renowned security expert Bruce Schneier. Thoughtful analysis of security issues, policies and technologies.",
+                    url: "https://www.schneier.com/",
+                    tags: ["Analysis", "Policy", "Privacy"]
+                },
+                {
+                    title: "The Hacker News",
+                    description: "Cybersecurity news site focusing on hacking, data breaches, and vulnerability disclosures. Fast updates on emerging threats.",
+                    url: "https://thehackernews.com/",
+                    tags: ["News", "Vulnerabilities", "Threats"]
+                },
+                {
+                    title: "Dark Reading",
+                    description: "Comprehensive coverage of enterprise security topics including threat intelligence, vulnerabilities, and compliance.",
+                    url: "https://www.darkreading.com/",
+                    tags: ["Enterprise", "Defense", "Industry"]
+                },
+                {
+                    title: "Bleeping Computer",
+                    description: "Detailed reporting on malware, ransomware and security vulnerabilities. Known for technical depth and accuracy.",
+                    url: "https://www.bleepingcomputer.com/",
+                    tags: ["Malware", "Technical", "News"]
+                },
+                {
+                    title: "CISA Alerts",
+                    description: "Official alerts from the U.S. Cybersecurity & Infrastructure Security Agency about critical vulnerabilities and threats.",
+                    url: "https://www.cisa.gov/news-events/cybersecurity-advisories",
+                    tags: ["Government", "Advisories", "Critical"]
+                },
+                {
+                    title: "The Record by Recorded Future",
+                    description: "Cybersecurity news with a focus on global threats and state-sponsored activities. Quality journalism on cyber topics.",
+                    url: "https://therecord.media/",
+                    tags: ["Threats", "Global", "Research"]
+                },
+                {
+                    title: "Zero Day",
+                    description: "Substack newsletter by Kim Zetter covering cybersecurity news, particularly focused on critical infrastructure and policy.",
+                    url: "https://zetter.substack.com/",
+                    tags: ["Analysis", "Policy", "Infrastructure"]
+                },
+                {
+                    title: "SANS Internet Storm Center",
+                    description: "Monitors global cyber threats and provides daily analysis of emerging security issues. Run by SANS, a respected security training organization.",
+                    url: "https://isc.sans.edu/",
+                    tags: ["Threats", "Analysis", "Technical"]
+                },
+                {
+                    title: "Trail of Bits Blog",
+                    description: "Technical blog from a top cybersecurity research firm. Deep dives into vulnerabilities and security engineering.",
+                    url: "https://blog.trailofbits.com/",
+                    tags: ["Research", "Technical", "Engineering"]
+                }
+            ]
+        };
+        
+        // Function to create sticky notes
+        function createStickyNotes(category) {
+            const container = document.getElementById(`${category}-container`);
+            container.innerHTML = '';
+            
+            resources[category].forEach(resource => {
+                const note = document.createElement('div');
+                note.className = `sticky-note ${category}-note`;
+                
+                let tagsHTML = '';
+                resource.tags.forEach(tag => {
+                    tagsHTML += `<span class="tag">${tag}</span>`;
+                });
+                
+                note.innerHTML = `
+                    <h3>${resource.title}</h3>
+                    <div class="tag-container">
+                        ${tagsHTML}
+                    </div>
+                    <p>${resource.description}</p>
+                    <div class="site-links">
+                        <a href="${resource.url}" target="_blank">Visit Site →</a>
+                    </div>
+                `;
+                
+                container.appendChild(note);
+            });
+        }
+        
+        // Function to show category
+        function showCategory(category) {
+            // Hide all content
+            document.querySelectorAll('.content').forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // Show selected content
+            document.getElementById(`${category}-content`).classList.add('active');
+            
+            // Update active tab
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelector(`.tab-${category}`).classList.add('active');
+            
+            // Create sticky notes if not already created
+            if (document.getElementById(`${category}-container`).children.length === 0) {
+                createStickyNotes(category);
+            }
+        }
+        
+        // Initialize site
+        window.onload = function() {
+            createStickyNotes('ai');
+        };
+    </script>
+</body>
+</html>
